@@ -497,6 +497,9 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 .dropdown-item.active { color: var(--sage-600); font-weight: 500; }
 .dropdown-item svg { width: 16px; height: 16px; opacity: 0.5; flex-shrink: 0; }
 .dropdown-item.active svg { opacity: 0.8; }
+.dropdown-item.disabled { color: var(--slate-300); pointer-events: none; cursor: default; }
+.dropdown-item.disabled:hover { background: transparent; color: var(--slate-300); }
+.dropdown-item .coming-soon { font-size: 10px; color: var(--slate-300); margin-left: auto; font-weight: 500; letter-spacing: 0.02em; }
 
 .dropdown-arrow {
   width: 14px !important;
@@ -1945,6 +1948,326 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Project Detail View */
+.view-project-detail {
+  display: none;
+  height: 100%;
+  overflow-y: auto;
+}
+.view-project-detail.active { display: flex; }
+
+.project-detail-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-8) var(--space-8) var(--space-8);
+  gap: var(--space-8);
+}
+
+.project-detail-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.project-detail-back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--slate-500);
+  font-size: 0.82rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+  width: fit-content;
+}
+.project-detail-back:hover { color: var(--slate-700); }
+.project-detail-back svg { width: 14px; height: 14px; }
+
+.project-detail-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.2;
+  margin-top: var(--space-1);
+}
+
+.project-detail-desc {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--slate-500);
+  line-height: 1.5;
+  margin-top: calc(var(--space-1) * -1);
+}
+
+.project-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: calc(var(--space-1) * -1);
+}
+
+.project-detail-actions button {
+  background: none;
+  border: none;
+  padding: var(--space-1);
+  cursor: pointer;
+  color: var(--slate-400);
+  border-radius: 6px;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.project-detail-actions button:hover { color: var(--slate-600); background: var(--slate-50); }
+.project-detail-actions button svg { width: 18px; height: 18px; }
+
+.project-detail-input-box {
+  border: 1px solid var(--slate-200);
+  border-radius: 16px;
+  padding: var(--space-4) var(--space-5);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.project-detail-input-box textarea {
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--slate-900);
+  background: transparent;
+  width: 100%;
+  line-height: 1.5;
+}
+.project-detail-input-box textarea::placeholder { color: var(--slate-400); }
+
+.project-detail-input-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-detail-input-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.project-detail-input-left button {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--slate-150, var(--slate-100));
+  background: var(--white);
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.project-detail-input-left button:hover { border-color: var(--slate-300); color: var(--slate-600); }
+.project-detail-input-left button svg { width: 14px; height: 14px; }
+
+.project-detail-input-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.project-detail-model {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--slate-500);
+  cursor: pointer;
+}
+.project-detail-model svg { width: 10px; height: 10px; opacity: 0.5; }
+
+.project-detail-voice {
+  display: flex;
+  align-items: center;
+  color: var(--slate-400);
+  cursor: pointer;
+}
+.project-detail-voice svg { width: 18px; height: 18px; }
+
+.project-detail-chat-cta {
+  border: 1px solid var(--slate-150, var(--slate-100));
+  border-radius: 12px;
+  padding: var(--space-5) var(--space-6);
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--slate-500);
+  line-height: 1.5;
+}
+
+.project-detail-threads {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.project-detail-thread {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-2);
+  border-bottom: 1px solid var(--slate-100);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+  border-radius: 8px;
+}
+.project-detail-thread:hover { background: var(--slate-50); }
+.project-detail-thread:last-child { border-bottom: none; }
+
+.project-detail-thread-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.project-detail-thread-icon svg { width: 16px; height: 16px; color: var(--slate-400); }
+
+.project-detail-thread-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-detail-thread-title {
+  font-size: 0.88rem;
+  font-weight: 450;
+  color: var(--slate-900);
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.project-detail-thread-preview {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--slate-400);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-detail-thread-time {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-400);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* Project Detail Sidebar */
+.project-detail-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.project-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.project-detail-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-detail-section-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--slate-900);
+}
+
+.project-detail-section-add {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--slate-400);
+  border-radius: 6px;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.project-detail-section-add:hover { color: var(--slate-600); background: var(--slate-50); }
+.project-detail-section-add svg { width: 16px; height: 16px; }
+
+.project-detail-section-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--slate-400);
+  line-height: 1.5;
+}
+
+.project-detail-files-placeholder {
+  background: var(--slate-50);
+  border-radius: 12px;
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.project-detail-files-icons {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  position: relative;
+  height: 56px;
+  margin-bottom: var(--space-1);
+}
+
+.project-detail-file-icon {
+  width: 40px;
+  height: 48px;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.project-detail-file-icon:nth-child(1) { transform: rotate(-6deg); z-index: 1; }
+.project-detail-file-icon:nth-child(2) { margin-left: -8px; transform: rotate(0deg); z-index: 2; }
+.project-detail-file-icon:nth-child(3) { margin-left: -8px; transform: rotate(6deg); z-index: 3; }
+
+.project-detail-file-icon svg { width: 16px; height: 16px; color: var(--slate-300); }
+.project-detail-file-icon:nth-child(3) svg { width: 14px; height: 14px; }
+
+.project-detail-files-text {
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: var(--slate-400);
+  text-align: center;
+  line-height: 1.5;
+}
+
 /* ─── AGENTS VIEW ─── */
 .view-agents { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .view-agents.active { display: flex; }
@@ -3055,6 +3378,112 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* New Project Modal */
+.view-new-project {
+  display: none;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.view-new-project.active { display: flex; }
+
+.new-project-form {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.new-project-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.2;
+}
+
+.new-project-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.new-project-label {
+  font-size: 0.82rem;
+  font-weight: 450;
+  color: var(--slate-700);
+}
+
+.new-project-input {
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--slate-900);
+  background: var(--white);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+.new-project-input::placeholder { color: var(--slate-400); }
+.new-project-input:focus { border-color: var(--sage-400); box-shadow: 0 0 0 3px rgba(91,154,138,0.08); }
+
+.new-project-textarea {
+  border: 1px solid var(--slate-200);
+  border-radius: 10px;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--slate-900);
+  background: var(--white);
+  outline: none;
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+.new-project-textarea::placeholder { color: var(--slate-400); }
+.new-project-textarea:focus { border-color: var(--sage-400); box-shadow: 0 0 0 3px rgba(91,154,138,0.08); }
+
+.new-project-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.new-project-cancel {
+  padding: var(--space-2) var(--space-5);
+  border-radius: 20px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-700);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 450;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.new-project-cancel:hover { border-color: var(--slate-300); background: var(--slate-50); }
+
+.new-project-submit {
+  padding: var(--space-2) var(--space-5);
+  border-radius: 20px;
+  border: none;
+  background: var(--slate-900);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 450;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.new-project-submit:hover { background: var(--slate-800); }
 </style>
 </head>
 <body>
@@ -3171,6 +3600,14 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="agents-plugin-sub-item" onclick="showOpsCommands()">Commands</div>
           <div class="agents-plugin-sub-item" onclick="showOpsSkills()">Skills</div>
         </div>
+        <div class="agents-plugin-item" id="agentProd" onclick="showAgentDetail('prod')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Productivity
+        </div>
+        <div class="agents-plugin-sub" id="agentProdSub">
+          <div class="agents-plugin-sub-item" onclick="showProdCommands()">Commands</div>
+          <div class="agents-plugin-sub-item" onclick="showProdSkills()">Skills</div>
+        </div>
 
         <div class="agents-section-label">
           Organization agents
@@ -3206,7 +3643,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="home-input-toolbar">
             <div class="input-folder-select" onclick="toggleFolderDropdown(event)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
-              <span class="input-folder-name">Select a folder</span>
+              <span class="input-folder-name">Work in a folder</span>
               <svg class="input-folder-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               <!-- Folder dropdown -->
               <div class="dropdown-menu folder-dropdown" id="folderDropdown">
@@ -3228,8 +3665,8 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                 </div>
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-item" onclick="openFolderPicker(event)">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  New folder
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+                  Work in a different folder
                 </div>
               </div>
             </div>
@@ -3241,16 +3678,10 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                   Add files or photos
                 </div>
-                <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                <div class="dropdown-item disabled">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                   Add Knowledge Base
-                  <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                  <div class="dropdown-sub">
-                    <div class="dropdown-item">Clinical Ops</div>
-                    <div class="dropdown-item">Board Materials</div>
-                    <div class="dropdown-item">Compliance</div>
-                    <div class="dropdown-item">Marketing</div>
-                  </div>
+                  <span class="coming-soon">Coming soon</span>
                 </div>
                 <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
@@ -3286,6 +3717,13 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
                         <div class="dropdown-item plugin-action" data-category="Ops" data-action="Evaluate a vendor">Evaluate a vendor</div>
                         <div class="dropdown-item plugin-action" data-category="Ops" data-action="Document a business process as SOP">Document a business process as SOP</div>
                         <div class="dropdown-item plugin-action" data-category="Ops" data-action="Generate a weekly status for leadership">Generate a weekly status for leadership</div>
+                      </div>
+                    </div>
+                    <div class="dropdown-item has-sub" onmouseenter="showSub(this)" onmouseleave="hideSub(this)">
+                      Productivity
+                      <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      <div class="dropdown-sub">
+                        <div class="dropdown-item plugin-action" data-category="Prod" data-action="Create a PPT">Create a PPT</div>
                       </div>
                     </div>
                     <div class="dropdown-divider"></div>
@@ -4522,6 +4960,169 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
       </div>
     </div>
 
+    <!-- PRODUCTIVITY COMMANDS VIEW -->
+    <div class="view-agent-panel" id="viewProdCommands">
+      <div class="agent-panel-list">
+        <div class="agent-panel-list-header">Commands</div>
+        <div class="agent-panel-list-item active" onclick="selectProdCommand(this, 'summarize')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          /summarize
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdCommand(this, 'draft-email')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          /draft-email
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdCommand(this, 'action-plan')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          /action-plan
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdCommand(this, 'brief')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          /brief
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdCommand(this, 'extract-actions')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          /extract-actions
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdCommand(this, 'meeting-recap')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          /meeting-recap
+        </div>
+      </div>
+      <div class="agent-panel-detail" id="prodCmdDetail">
+        <div class="apd-header">
+          <span class="apd-title" id="prodCmdDetailTitle">/summarize</span>
+          <div class="apd-actions">
+            <button class="apd-btn">Edit</button>
+            <div class="apd-more">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="apd-meta">
+          <div class="apd-meta-item">
+            <div class="apd-meta-label">Source</div>
+            <div class="apd-meta-value">Sprout</div>
+          </div>
+          <div class="apd-meta-item">
+            <div class="apd-meta-label">Last updated</div>
+            <div class="apd-meta-value" id="prodCmdDetailDate">Feb 25, 2026</div>
+          </div>
+        </div>
+        <div class="apd-desc-label">Description</div>
+        <div class="apd-desc-text" id="prodCmdDetailDesc">Condense a document, email thread, or transcript into a concise summary with key takeaways, decisions made, and action items.</div>
+        <div class="apd-content-card" id="prodCmdDetailContent">
+          <div class="apd-content-icons">
+            <div class="apd-content-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="apd-content-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+            <div class="apd-content-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+          </div>
+          <h2>Summarize</h2>
+          <p>Extract the essential information from any document or conversation.</p>
+          <h3>Usage</h3>
+          <pre>/summarize [document or paste content]</pre>
+          <h3>Output</h3>
+          <ul>
+            <li>Executive summary (2-3 sentences)</li>
+            <li>Key points and takeaways</li>
+            <li>Decisions made</li>
+            <li>Open questions</li>
+            <li>Action items with owners</li>
+          </ul>
+          <h3>Options</h3>
+          <ul>
+            <li><strong>--format</strong> — bullets, narrative, or executive (default: bullets)</li>
+            <li><strong>--length</strong> — short, medium, or detailed (default: medium)</li>
+            <li><strong>--focus</strong> — specific topic to emphasize</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTIVITY SKILLS VIEW -->
+    <div class="view-agent-panel" id="viewProdSkills">
+      <div class="agent-panel-list">
+        <div class="agent-panel-list-header">Skills</div>
+        <div class="agent-panel-list-item active" onclick="selectProdSkill(this, 'document-summarization')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          document-summarization
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdSkill(this, 'email-drafting')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          email-drafting
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdSkill(this, 'action-extraction')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          action-extraction
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdSkill(this, 'brief-generation')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          brief-generation
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdSkill(this, 'meeting-recap')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          meeting-recap
+        </div>
+        <div class="agent-panel-list-item" onclick="selectProdSkill(this, 'task-prioritization')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg>
+          task-prioritization
+        </div>
+      </div>
+      <div class="agent-panel-detail" id="prodSkillDetail">
+        <div class="apd-header">
+          <span class="apd-title" id="prodSkillDetailTitle">document-summarization</span>
+          <div class="apd-actions">
+            <button class="apd-btn">Edit</button>
+            <div class="apd-more">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="apd-meta">
+          <div class="apd-meta-item">
+            <div class="apd-meta-label">Added by</div>
+            <div class="apd-meta-value">User</div>
+          </div>
+          <div class="apd-meta-item">
+            <div class="apd-meta-label">Last updated</div>
+            <div class="apd-meta-value" id="prodSkillDetailDate">Feb 25, 2026</div>
+          </div>
+        </div>
+        <div class="apd-desc-label">Description</div>
+        <div class="apd-desc-text" id="prodSkillDetailDesc">Intelligently summarize documents of any length, preserving key context and extracting structured takeaways. Trigger with "summarize this", "give me the key points", "TLDR", or when the user shares a long document and asks for a condensed version.</div>
+        <div class="apd-content-card" id="prodSkillDetailContent">
+          <div class="apd-content-icons">
+            <div class="apd-content-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="apd-content-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+            <div class="apd-content-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+          </div>
+          <h2>Document Summarization</h2>
+          <p>Extract the essential information from any document or conversation, preserving context and nuance.</p>
+          <h3>Summarization Framework</h3>
+          <h4>1. Identify</h4>
+          <ul>
+            <li>What type of document is this? (report, email thread, transcript, proposal)</li>
+            <li>Who is the intended audience?</li>
+            <li>What decisions or actions does it reference?</li>
+          </ul>
+          <h4>2. Extract</h4>
+          <ul>
+            <li>Core thesis or purpose</li>
+            <li>Key arguments, data points, or findings</li>
+            <li>Decisions made and rationale</li>
+            <li>Open questions or unresolved items</li>
+          </ul>
+          <h4>3. Structure</h4>
+          <ul>
+            <li>Executive summary (2-3 sentences)</li>
+            <li>Key takeaways (bulleted)</li>
+            <li>Action items with owners and deadlines</li>
+            <li>Follow-up recommendations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <!-- CONNECTORS VIEW -->
     <div class="view-connectors" id="viewConnectors">
       <div class="conn-coming-soon">
@@ -4598,7 +5199,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
       <div class="projects-container">
         <div class="projects-header">
           <h2 class="projects-title">Projects</h2>
-          <button class="projects-new-btn">
+          <button class="projects-new-btn" onclick="showNewProject()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             New project
           </button>
@@ -4616,7 +5217,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
         </div>
 
         <div class="projects-grid">
-          <div class="project-card" onclick="showThread()">
+          <div class="project-card" onclick="showProjectDetail('Q4 Board Deck','Quarterly board presentation covering financial performance, clinical outcomes, and strategic initiatives for stakeholder review.')">
             <div class="project-card-name">Q4 Board Deck</div>
             <div class="project-card-desc">Quarterly board presentation covering financial performance, clinical outcomes, and strategic initiatives for stakeholder review.</div>
             <div class="project-card-meta">
@@ -4625,7 +5226,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card" onclick="showProjectDetail('HIPAA Compliance Audit','Annual compliance review tracking policy adherence, risk assessments, and remediation plans across all departments.')">
             <div class="project-card-name">HIPAA Compliance Audit</div>
             <div class="project-card-desc">Annual compliance review tracking policy adherence, risk assessments, and remediation plans across all departments.</div>
             <div class="project-card-meta">
@@ -4634,7 +5235,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card" onclick="showProjectDetail('Patient Engagement Campaign','Multi-channel outreach strategy for improving patient satisfaction scores and reducing appointment no-shows.')">
             <div class="project-card-name">Patient Engagement Campaign</div>
             <div class="project-card-desc">Multi-channel outreach strategy for improving patient satisfaction scores and reducing appointment no-shows.</div>
             <div class="project-card-meta">
@@ -4643,7 +5244,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card" onclick="showProjectDetail('Vendor Evaluation — Lab Systems','Comparative analysis of laboratory information system vendors including pricing, integration capabilities, and compliance certifications.')">
             <div class="project-card-name">Vendor Evaluation — Lab Systems</div>
             <div class="project-card-desc">Comparative analysis of laboratory information system vendors including pricing, integration capabilities, and compliance certifications.</div>
             <div class="project-card-meta">
@@ -4652,7 +5253,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card" onclick="showProjectDetail('Clinical SOP Documentation','Standardized operating procedures for clinical workflows, triage protocols, and emergency response guidelines.')">
             <div class="project-card-name">Clinical SOP Documentation</div>
             <div class="project-card-desc">Standardized operating procedures for clinical workflows, triage protocols, and emergency response guidelines.</div>
             <div class="project-card-meta">
@@ -4661,7 +5262,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card" onclick="showProjectDetail('Weekly Leadership Status','Automated weekly digest covering key metrics, departmental updates, and action items for the executive leadership team.')">
             <div class="project-card-name">Weekly Leadership Status</div>
             <div class="project-card-desc">Automated weekly digest covering key metrics, departmental updates, and action items for the executive leadership team.</div>
             <div class="project-card-meta">
@@ -4670,7 +5271,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card" onclick="showProjectDetail('NDA Review Pipeline','Incoming non-disclosure agreements tracking, triage, and legal review workflow for partnership evaluations.')">
             <div class="project-card-name">NDA Review Pipeline</div>
             <div class="project-card-desc">Incoming non-disclosure agreements tracking, triage, and legal review workflow for partnership evaluations.</div>
             <div class="project-card-meta">
@@ -4679,7 +5280,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
             </div>
           </div>
 
-          <div class="project-card">
+          <div class="project-card" onclick="showProjectDetail('HR Policy Refresh 2025','Comprehensive update to employee handbook, remote work policies, and benefits documentation for the new fiscal year.')">
             <div class="project-card-name">HR Policy Refresh 2025</div>
             <div class="project-card-desc">Comprehensive update to employee handbook, remote work policies, and benefits documentation for the new fiscal year.</div>
             <div class="project-card-meta">
@@ -4687,6 +5288,155 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
               Updated 1 week ago
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT DETAIL VIEW -->
+    <div class="view-project-detail" id="viewProjectDetail">
+      <div class="project-detail-layout">
+        <div class="project-detail-main">
+          <div class="project-detail-back" onclick="showProjects()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            All projects
+          </div>
+
+          <div>
+            <div class="project-detail-name" id="projectDetailName">Q4 Board Deck</div>
+            <div class="project-detail-desc" id="projectDetailDesc">Quarterly board presentation covering financial performance, clinical outcomes, and strategic initiatives for stakeholder review.</div>
+            <div class="project-detail-actions">
+              <button title="More options">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+              </button>
+              <button title="Favorite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="project-detail-input-box">
+            <textarea rows="1" placeholder="Reply..."></textarea>
+            <div class="project-detail-input-toolbar">
+              <div class="project-detail-input-left">
+                <button title="Add attachment">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+              </div>
+              <div class="project-detail-input-right">
+                <div class="project-detail-model">
+                  Opus 4.6
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="project-detail-voice">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-detail-chat-cta">
+            Start a chat to keep conversations organized and re-use project knowledge.
+          </div>
+
+          <div class="project-detail-threads">
+            <div class="project-detail-thread" onclick="showThread()">
+              <div class="project-detail-thread-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="project-detail-thread-content">
+                <div class="project-detail-thread-title">Draft executive summary slide</div>
+                <div class="project-detail-thread-preview">Here's a draft of the executive summary with key financial highlights and clinical outcomes...</div>
+              </div>
+              <div class="project-detail-thread-time">2h ago</div>
+            </div>
+
+            <div class="project-detail-thread" onclick="showThread()">
+              <div class="project-detail-thread-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="project-detail-thread-content">
+                <div class="project-detail-thread-title">Revenue forecast comparison table</div>
+                <div class="project-detail-thread-preview">I've built the comparison table showing Q3 actuals vs Q4 projections across all service lines...</div>
+              </div>
+              <div class="project-detail-thread-time">5h ago</div>
+            </div>
+
+            <div class="project-detail-thread" onclick="showThread()">
+              <div class="project-detail-thread-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="project-detail-thread-content">
+                <div class="project-detail-thread-title">Clinical outcomes metrics for board</div>
+                <div class="project-detail-thread-preview">Pulled the latest patient satisfaction and readmission rate data for the outcomes section...</div>
+              </div>
+              <div class="project-detail-thread-time">1d ago</div>
+            </div>
+
+            <div class="project-detail-thread" onclick="showThread()">
+              <div class="project-detail-thread-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="project-detail-thread-content">
+                <div class="project-detail-thread-title">Strategic initiatives roadmap draft</div>
+                <div class="project-detail-thread-preview">Outlined the three priority initiatives for the next fiscal year with timeline and resource estimates...</div>
+              </div>
+              <div class="project-detail-thread-time">2d ago</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-detail-sidebar">
+          <div class="project-detail-section">
+            <div class="project-detail-section-header">
+              <div class="project-detail-section-title">Instructions</div>
+              <div class="project-detail-section-add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="project-detail-section-desc">Add instructions to tailor Claude's responses</div>
+          </div>
+
+          <div class="project-detail-section">
+            <div class="project-detail-section-header">
+              <div class="project-detail-section-title">Files</div>
+              <div class="project-detail-section-add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+            <div class="project-detail-files-placeholder">
+              <div class="project-detail-files-icons">
+                <div class="project-detail-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+                </div>
+                <div class="project-detail-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                </div>
+                <div class="project-detail-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+              </div>
+              <div class="project-detail-files-text">Add PDFs, documents, or other text to<br>reference in this project.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW PROJECT VIEW -->
+    <div class="view-new-project" id="viewNewProject">
+      <div class="new-project-form">
+        <div class="new-project-title">Create a personal project</div>
+        <div class="new-project-field">
+          <label class="new-project-label">What are you working on?</label>
+          <input type="text" class="new-project-input" id="newProjectName" placeholder="Name your project">
+        </div>
+        <div class="new-project-field">
+          <label class="new-project-label">What are you trying to achieve?</label>
+          <textarea class="new-project-textarea" id="newProjectDesc" placeholder="Describe your project, goals, subject, etc..."></textarea>
+        </div>
+        <div class="new-project-actions">
+          <button class="new-project-cancel" onclick="showProjects()">Cancel</button>
+          <button class="new-project-submit" onclick="createNewProject()">Create project</button>
         </div>
       </div>
     </div>
@@ -4755,6 +5505,18 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           <div class="modal-agent-card-desc">Optimize business operations — vendor management, process documentation, change management, capacity planning.</div>
         </div>
 
+        <div class="modal-agent-card">
+          <div class="modal-agent-card-top">
+            <div class="modal-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <button class="modal-agent-card-manage" onclick="closeBrowseAgents();showAgentDetail('prod')">Manage</button>
+          </div>
+          <div class="modal-agent-card-name-row">
+            <span class="modal-agent-card-name">Productivity</span>
+            <span class="modal-agent-card-version">v1.0.0</span>
+          </div>
+          <div class="modal-agent-card-desc">Summarize documents, draft emails from meeting notes, create action plans, and manage tasks across your workflow.</div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -4782,6 +5544,10 @@ function hideAllViews() {
   document.getElementById('viewHrConnectors').classList.remove('active');
   document.getElementById('viewOpsCommands').classList.remove('active');
   document.getElementById('viewOpsSkills').classList.remove('active');
+  document.getElementById('viewProdCommands').classList.remove('active');
+  document.getElementById('viewProdSkills').classList.remove('active');
+  document.getElementById('viewProjectDetail').classList.remove('active');
+  document.getElementById('viewNewProject').classList.remove('active');
   // Clear agent sidebar active states
   document.querySelectorAll('.agents-plugin-item').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.agents-plugin-sub').forEach(el => el.classList.remove('visible'));
@@ -4841,7 +5607,7 @@ function showAgentDetail(type) {
 
   // Highlight the clicked item + show sub-items for legal
   const items = document.querySelectorAll('.agents-plugin-item');
-  const map = { legal: 0, data: 1, hr: 2, ops: 3 };
+  const map = { legal: 0, data: 1, hr: 2, ops: 3, prod: 4 };
   items.forEach((el, i) => el.classList.toggle('active', i === map[type]));
 
   // Show sub-nav for agents with drill-down
@@ -4849,10 +5615,12 @@ function showAgentDetail(type) {
   const dataSub = document.getElementById('agentDataSub');
   const hrSub = document.getElementById('agentHrSub');
   const opsSub = document.getElementById('agentOpsSub');
+  const prodSub = document.getElementById('agentProdSub');
   legalSub.classList.toggle('visible', type === 'legal');
   dataSub.classList.toggle('visible', type === 'data');
   hrSub.classList.toggle('visible', type === 'hr');
   opsSub.classList.toggle('visible', type === 'ops');
+  prodSub.classList.toggle('visible', type === 'prod');
 
   // Update content based on agent type
   const data = {
@@ -4891,6 +5659,15 @@ function showAgentDetail(type) {
       questions: ['Evaluate a vendor with cost and risk analysis', 'Document a business process as an SOP', 'Generate a weekly status report for leadership'],
       commands: ['/capacity-plan', '/change-request', '/process-doc', '/runbook', '/status-report', '/vendor-review'],
       skills: ['change-management', 'compliance-tracking', 'process-optimization', 'resource-planning', 'risk-assessment', 'vendor-management']
+    },
+    prod: {
+      name: 'Productivity',
+      desc: 'Summarize documents, draft emails from meeting notes, create action plans, and manage tasks across your workflow. Automate repetitive writing and organization tasks.',
+      version: '1.0.0',
+      author: 'Sprout',
+      questions: ['Summarize a document into key points', 'Draft an email from meeting notes', 'Create an action plan from a transcript', 'Turn a brainstorm into a structured brief', 'Extract action items from a conversation'],
+      commands: ['/summarize', '/draft-email', '/action-plan', '/brief', '/extract-actions', '/meeting-recap'],
+      skills: ['document-summarization', 'email-drafting', 'action-extraction', 'brief-generation', 'meeting-recap', 'task-prioritization']
     }
   };
 
@@ -4983,6 +5760,30 @@ function showOpsSkills() {
   document.getElementById('agentOps').classList.add('active');
   document.getElementById('agentOpsSub').classList.add('visible');
   document.querySelectorAll('#agentOpsSub .agents-plugin-sub-item').forEach((el, i) => {
+    el.classList.toggle('active', i === 1);
+  });
+}
+
+function showProdCommands() {
+  hideAllViews();
+  document.getElementById('viewProdCommands').classList.add('active');
+  document.getElementById('sidebarDefault').classList.add('hidden');
+  document.getElementById('sidebarAgents').classList.add('active');
+  document.getElementById('agentProd').classList.add('active');
+  document.getElementById('agentProdSub').classList.add('visible');
+  document.querySelectorAll('#agentProdSub .agents-plugin-sub-item').forEach((el, i) => {
+    el.classList.toggle('active', i === 0);
+  });
+}
+
+function showProdSkills() {
+  hideAllViews();
+  document.getElementById('viewProdSkills').classList.add('active');
+  document.getElementById('sidebarDefault').classList.add('hidden');
+  document.getElementById('sidebarAgents').classList.add('active');
+  document.getElementById('agentProd').classList.add('active');
+  document.getElementById('agentProdSub').classList.add('visible');
+  document.querySelectorAll('#agentProdSub .agents-plugin-sub-item').forEach((el, i) => {
     el.classList.toggle('active', i === 1);
   });
 }
@@ -5305,6 +6106,96 @@ function selectOpsSkill(el, key) {
   card.innerHTML = icons + d.content;
 }
 
+// Productivity agent command data
+const prodCommandData = {
+  'summarize': {
+    title: '/summarize',
+    desc: 'Condense a document, email thread, or transcript into a concise summary with key takeaways, decisions made, and action items.',
+    content: `<h2>/summarize</h2><p>Extract the essential information from any document or conversation.</p><h3>Usage</h3><pre>/summarize [document or paste content]</pre><h3>Output</h3><ul><li>Executive summary (2-3 sentences)</li><li>Key points and takeaways</li><li>Decisions made</li><li>Open questions</li><li>Action items with owners</li></ul><h3>Options</h3><ul><li><strong>--format</strong> — bullets, narrative, or executive (default: bullets)</li><li><strong>--length</strong> — short, medium, or detailed (default: medium)</li><li><strong>--focus</strong> — specific topic to emphasize</li></ul>`
+  },
+  'draft-email': {
+    title: '/draft-email',
+    desc: 'Compose professional emails from meeting notes, briefs, or context. Adjusts tone and structure to audience and purpose.',
+    content: `<h2>/draft-email</h2><p>Generate polished emails from raw context — meeting notes, bullet points, or verbal instructions.</p><h3>Usage</h3><pre>/draft-email [context or paste notes]</pre><h3>Options</h3><ul><li><strong>--tone</strong> — formal, friendly, or direct (default: professional)</li><li><strong>--audience</strong> — executive, team, external, or client</li><li><strong>--action</strong> — what you want the recipient to do</li></ul><h3>Output</h3><ul><li>Subject line</li><li>Email body with clear structure</li><li>Suggested call-to-action</li><li>Optional follow-up reminder</li></ul>`
+  },
+  'action-plan': {
+    title: '/action-plan',
+    desc: 'Turn a transcript, brainstorm, or meeting recording into a structured action plan with owners, deadlines, and priorities.',
+    content: `<h2>/action-plan</h2><p>Convert unstructured input into an organized, actionable plan.</p><h3>Usage</h3><pre>/action-plan [transcript or notes]</pre><h3>Output Structure</h3><ol><li><strong>Objective:</strong> What this plan aims to accomplish</li><li><strong>Key decisions made:</strong> Context captured from the input</li><li><strong>Action items:</strong> Each with owner, deadline, and priority</li><li><strong>Dependencies:</strong> Items that block other items</li><li><strong>Follow-up schedule:</strong> When to review progress</li></ol><h3>Options</h3><ul><li><strong>--format</strong> — table, checklist, or narrative</li><li><strong>--timeframe</strong> — sprint, week, month, or quarter</li></ul>`
+  },
+  'brief': {
+    title: '/brief',
+    desc: 'Turn a brainstorm, conversation, or raw thinking into a structured brief — project brief, strategy brief, or decision brief.',
+    content: `<h2>/brief</h2><p>Transform unstructured ideas into a clear, structured brief ready for stakeholder review.</p><h3>Usage</h3><pre>/brief [raw input or paste brainstorm]</pre><h3>Brief Types</h3><ul><li><strong>Project brief:</strong> Objective, scope, timeline, resources, success criteria</li><li><strong>Strategy brief:</strong> Context, options, recommendation, risks, next steps</li><li><strong>Decision brief:</strong> Decision needed, options with trade-offs, recommendation</li></ul><h3>Output</h3><ul><li>Executive summary</li><li>Background and context</li><li>Key points organized by theme</li><li>Recommendations</li><li>Next steps</li></ul>`
+  },
+  'extract-actions': {
+    title: '/extract-actions',
+    desc: 'Scan any document, email thread, or transcript and extract all action items, to-dos, and commitments with owners.',
+    content: `<h2>/extract-actions</h2><p>Automatically identify and extract action items from any text.</p><h3>Usage</h3><pre>/extract-actions [paste content]</pre><h3>Detection Patterns</h3><ul><li>Explicit assignments: "John will...", "Sarah to..."</li><li>Commitments: "I'll follow up on...", "Let's make sure..."</li><li>Deadlines: "by Friday", "next week", "before the launch"</li><li>Decisions requiring action: "We agreed to..."</li></ul><h3>Output</h3><pre>| # | Action Item           | Owner   | Deadline  | Priority |\n|---|----------------------|---------|-----------|----------|\n| 1 | [extracted action]   | [name]  | [date]    | [H/M/L]  |</pre>`
+  },
+  'meeting-recap': {
+    title: '/meeting-recap',
+    desc: 'Generate a structured meeting recap from notes or a transcript — attendees, key discussion points, decisions, and follow-ups.',
+    content: `<h2>/meeting-recap</h2><p>Transform raw meeting notes or transcripts into polished recaps ready to share with attendees and stakeholders.</p><h3>Usage</h3><pre>/meeting-recap [notes or transcript]</pre><h3>Recap Structure</h3><ol><li><strong>Meeting info:</strong> Title, date, attendees, duration</li><li><strong>Summary:</strong> 2-3 sentence overview</li><li><strong>Discussion topics:</strong> Key points organized by agenda item</li><li><strong>Decisions made:</strong> What was decided and by whom</li><li><strong>Action items:</strong> Who, what, by when</li><li><strong>Parking lot:</strong> Topics deferred to future discussion</li></ol><h3>Options</h3><ul><li><strong>--distribute</strong> — format for email distribution</li><li><strong>--audience</strong> — attendees, leadership, or team-wide</li></ul>`
+  }
+};
+
+// Productivity agent skill data
+const prodSkillData = {
+  'document-summarization': {
+    title: 'document-summarization',
+    desc: 'Intelligently summarize documents of any length, preserving key context and extracting structured takeaways. Trigger with "summarize this", "give me the key points", "TLDR", or when the user shares a long document and asks for a condensed version.',
+    content: `<h2>Document Summarization</h2><p>Extract the essential information from any document or conversation, preserving context and nuance.</p><h3>Summarization Framework</h3><h4>1. Identify</h4><ul><li>What type of document is this? (report, email thread, transcript, proposal)</li><li>Who is the intended audience?</li><li>What decisions or actions does it reference?</li></ul><h4>2. Extract</h4><ul><li>Core thesis or purpose</li><li>Key arguments, data points, or findings</li><li>Decisions made and rationale</li><li>Open questions or unresolved items</li></ul><h4>3. Structure</h4><ul><li>Executive summary (2-3 sentences)</li><li>Key takeaways (bulleted)</li><li>Action items with owners and deadlines</li><li>Follow-up recommendations</li></ul>`
+  },
+  'email-drafting': {
+    title: 'email-drafting',
+    desc: 'Compose professional emails from raw context. Trigger with "draft an email", "write a response to", "help me reply", or when the user provides meeting notes and wants to communicate outcomes.',
+    content: `<h2>Email Drafting</h2><p>Generate polished, context-aware emails that match the appropriate tone, structure, and level of detail for the audience.</p><h3>Drafting Framework</h3><h4>1. Assess Context</h4><ul><li>Who is the audience? (executive, peer, external, team)</li><li>What is the purpose? (inform, request, follow-up, escalate)</li><li>What tone is appropriate? (formal, friendly, direct, diplomatic)</li></ul><h4>2. Structure</h4><ul><li>Clear subject line that previews the content</li><li>Opening that states purpose in first sentence</li><li>Body organized by key points, not stream of consciousness</li><li>Explicit call to action or next step</li></ul><h4>3. Refine</h4><ul><li>Remove unnecessary words and qualifiers</li><li>Check for appropriate level of detail</li><li>Ensure action items are clear and specific</li></ul>`
+  },
+  'action-extraction': {
+    title: 'action-extraction',
+    desc: 'Automatically detect and extract action items, commitments, and deadlines from any text. Trigger with "what are the action items", "who committed to what", or after any meeting transcript is shared.',
+    content: `<h2>Action Extraction</h2><p>Scan unstructured text to identify every commitment, assignment, and deadline — even when they are implicit or conversational.</p><h3>Detection Patterns</h3><ul><li><strong>Direct assignments:</strong> "John will handle...", "Can you take care of..."</li><li><strong>Self-commitments:</strong> "I'll send that over", "Let me follow up on..."</li><li><strong>Group decisions:</strong> "We agreed to...", "The team will..."</li><li><strong>Implicit actions:</strong> "We need to..." , "Someone should..."</li><li><strong>Deadlines:</strong> "by end of week", "before the board meeting"</li></ul><h3>Output Format</h3><ul><li>Action item description</li><li>Assigned owner (or "Unassigned" if unclear)</li><li>Deadline (or "TBD" if not specified)</li><li>Priority level based on urgency signals</li><li>Source quote from original text</li></ul>`
+  },
+  'brief-generation': {
+    title: 'brief-generation',
+    desc: 'Transform unstructured ideas into clear, structured briefs. Trigger with "turn this into a brief", "structure my thinking", "write up a plan", or when the user shares raw brainstorm output.',
+    content: `<h2>Brief Generation</h2><p>Convert raw thinking, brainstorms, and unstructured notes into polished, stakeholder-ready briefs.</p><h3>Brief Types</h3><h4>Project Brief</h4><ul><li>Objective and success criteria</li><li>Scope (in-scope / out-of-scope)</li><li>Timeline and milestones</li><li>Resources and dependencies</li><li>Risks and mitigation</li></ul><h4>Strategy Brief</h4><ul><li>Current state and context</li><li>Options evaluated with trade-offs</li><li>Recommendation with rationale</li><li>Implementation approach</li><li>Success metrics</li></ul><h4>Decision Brief</h4><ul><li>Decision to be made</li><li>Options (minimum 2-3)</li><li>Criteria for evaluation</li><li>Recommendation</li><li>Reversibility assessment</li></ul>`
+  },
+  'meeting-recap': {
+    title: 'meeting-recap',
+    desc: 'Generate structured meeting recaps from raw notes or transcripts. Trigger with "recap this meeting", "summarize the call", or when the user pastes meeting notes.',
+    content: `<h2>Meeting Recap</h2><p>Transform raw notes and transcripts into structured, shareable meeting recaps that capture decisions, actions, and key discussions.</p><h3>Recap Framework</h3><h4>1. Metadata</h4><ul><li>Meeting title and date</li><li>Attendees and roles</li><li>Duration and format (in-person / virtual)</li></ul><h4>2. Content</h4><ul><li>2-3 sentence executive summary</li><li>Discussion topics organized by agenda item</li><li>Key arguments and perspectives shared</li><li>Decisions made with rationale</li></ul><h4>3. Follow-up</h4><ul><li>Action items with owners and deadlines</li><li>Parking lot items for future meetings</li><li>Next meeting date and agenda preview</li></ul>`
+  },
+  'task-prioritization': {
+    title: 'task-prioritization',
+    desc: 'Help prioritize a list of tasks or initiatives using structured frameworks. Trigger with "help me prioritize", "what should I focus on", "rank these tasks", or when the user has a long list of competing priorities.',
+    content: `<h2>Task Prioritization</h2><p>Apply structured prioritization frameworks to help users focus on what matters most.</p><h3>Prioritization Frameworks</h3><h4>Eisenhower Matrix</h4><ul><li><strong>Do first:</strong> Urgent + Important</li><li><strong>Schedule:</strong> Important + Not Urgent</li><li><strong>Delegate:</strong> Urgent + Not Important</li><li><strong>Eliminate:</strong> Neither Urgent nor Important</li></ul><h4>Impact/Effort Matrix</h4><ul><li><strong>Quick wins:</strong> High Impact + Low Effort → Do immediately</li><li><strong>Big projects:</strong> High Impact + High Effort → Plan and schedule</li><li><strong>Fill-ins:</strong> Low Impact + Low Effort → Do when free</li><li><strong>Thankless tasks:</strong> Low Impact + High Effort → Reconsider or defer</li></ul><h4>MoSCoW Method</h4><ul><li><strong>Must have:</strong> Non-negotiable for the current cycle</li><li><strong>Should have:</strong> Important but not critical</li><li><strong>Could have:</strong> Nice to have if time allows</li><li><strong>Won't have:</strong> Explicitly deferred</li></ul>`
+  }
+};
+
+function selectProdCommand(el, key) {
+  el.closest('.agent-panel-list').querySelectorAll('.agent-panel-list-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const d = prodCommandData[key];
+  document.getElementById('prodCmdDetailTitle').textContent = d.title;
+  document.getElementById('prodCmdDetailDesc').textContent = d.desc;
+  const card = document.getElementById('prodCmdDetailContent');
+  const icons = card.querySelector('.apd-content-icons').outerHTML;
+  card.innerHTML = icons + d.content;
+}
+
+function selectProdSkill(el, key) {
+  el.closest('.agent-panel-list').querySelectorAll('.agent-panel-list-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const d = prodSkillData[key];
+  document.getElementById('prodSkillDetailTitle').textContent = d.title;
+  document.getElementById('prodSkillDetailDesc').textContent = d.desc;
+  const card = document.getElementById('prodSkillDetailContent');
+  const icons = card.querySelector('.apd-content-icons').outerHTML;
+  card.innerHTML = icons + d.content;
+}
+
 // HR agent command data
 const hrCommandData = {
   'comp-analysis': {
@@ -5418,6 +6309,35 @@ function showProjects() {
   document.querySelectorAll('.nav-item').forEach((el, i) => {
     el.classList.toggle('active', i === 0);
   });
+}
+
+function showProjectDetail(name, desc) {
+  hideAllViews();
+  restoreDefaultSidebar();
+  document.getElementById('viewProjectDetail').classList.add('active');
+  document.getElementById('projectDetailName').textContent = name;
+  document.getElementById('projectDetailDesc').textContent = desc;
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    el.classList.toggle('active', i === 0);
+  });
+}
+
+function showNewProject() {
+  hideAllViews();
+  restoreDefaultSidebar();
+  document.getElementById('viewNewProject').classList.add('active');
+  document.getElementById('newProjectName').value = '';
+  document.getElementById('newProjectDesc').value = '';
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    el.classList.toggle('active', i === 0);
+  });
+  setTimeout(() => document.getElementById('newProjectName').focus(), 100);
+}
+
+function createNewProject() {
+  const name = document.getElementById('newProjectName').value.trim() || 'Untitled project';
+  const desc = document.getElementById('newProjectDesc').value.trim() || '';
+  showProjectDetail(name, desc);
 }
 
 function toggleAudit() {
