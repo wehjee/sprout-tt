@@ -2269,7 +2269,7 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 }
 
 /* ─── AGENTS VIEW ─── */
-.view-agents { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+.view-agents { display: none; flex-direction: column; flex: 1; overflow-y: auto; }
 .view-agents.active { display: flex; }
 
 /* Agents sidebar overlay content */
@@ -2381,12 +2381,10 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
 
 /* Agents main content — centered */
 .agents-center {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0 var(--space-8);
+  padding: var(--space-12, 80px) var(--space-8) var(--space-8);
 }
 
 .agents-hero-icon {
@@ -2489,6 +2487,296 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Explore Agents */
+.explore-agents {
+  padding: var(--space-8) var(--space-8) var(--space-10);
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.explore-agents-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.explore-agents-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--slate-900);
+}
+
+.explore-agents-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--slate-200);
+  border-radius: 8px;
+  background: var(--white);
+  width: 220px;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+.explore-agents-search:focus-within { border-color: var(--sage-400); box-shadow: 0 0 0 3px rgba(91,154,138,0.08); }
+.explore-agents-search svg { width: 14px; height: 14px; color: var(--slate-400); flex-shrink: 0; }
+.explore-agents-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--slate-900);
+  width: 100%;
+  font-weight: 300;
+}
+.explore-agents-search input::placeholder { color: var(--slate-400); }
+
+.explore-agents-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.explore-filter-tab {
+  padding: var(--space-1) var(--space-3);
+  border-radius: 20px;
+  border: 1px solid var(--slate-200);
+  background: var(--white);
+  color: var(--slate-500);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.explore-filter-tab:hover { border-color: var(--slate-300); color: var(--slate-700); }
+.explore-filter-tab.active {
+  background: var(--slate-900);
+  border-color: var(--slate-900);
+  color: var(--white);
+}
+
+.explore-agents-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.explore-agent-card {
+  background: var(--white);
+  border: 1px solid var(--slate-100);
+  border-radius: 12px;
+  padding: var(--space-5);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.explore-agent-card:hover {
+  border-color: var(--slate-200);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.explore-agent-card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.explore-agent-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.explore-agent-card-icon svg { width: 18px; height: 18px; color: var(--slate-500); }
+
+.explore-agent-card-info { flex: 1; min-width: 0; }
+
+.explore-agent-card-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  line-height: 1.3;
+}
+
+.explore-agent-card-author {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--slate-400);
+}
+
+.explore-agent-card-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--slate-500);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.explore-agent-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.explore-agent-tag {
+  padding: 2px var(--space-2);
+  border-radius: 4px;
+  background: var(--slate-50);
+  font-size: 0.68rem;
+  font-weight: 450;
+  color: var(--slate-500);
+}
+
+.explore-no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--space-10) 0;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--slate-400);
+}
+
+/* Agent Use Modal */
+.modal-agent-use {
+  width: 100%;
+  max-width: 440px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideUp 0.3s var(--ease-out) both;
+  overflow: hidden;
+}
+
+.modal-agent-use-header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.modal-agent-use-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.modal-agent-use-icon svg { width: 22px; height: 22px; color: var(--slate-500); }
+
+.modal-agent-use-info { flex: 1; }
+
+.modal-agent-use-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--slate-900);
+  margin-bottom: 2px;
+}
+
+.modal-agent-use-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--slate-500);
+  line-height: 1.5;
+}
+
+.modal-agent-use-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--slate-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.modal-agent-use-close:hover { background: var(--slate-100); color: var(--slate-600); }
+.modal-agent-use-close svg { width: 16px; height: 16px; }
+
+.modal-agent-use-divider {
+  height: 1px;
+  background: var(--slate-100);
+  margin: 0 var(--space-6);
+}
+
+.modal-agent-use-options {
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.modal-agent-use-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.modal-agent-use-option:hover { background: var(--slate-50); }
+
+.modal-agent-use-option-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--slate-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.modal-agent-use-option:hover .modal-agent-use-option-icon { background: var(--slate-100); }
+.modal-agent-use-option-icon svg { width: 16px; height: 16px; color: var(--slate-500); }
+
+.modal-agent-use-option-text { flex: 1; }
+
+.modal-agent-use-option-title {
+  font-size: 0.85rem;
+  font-weight: 450;
+  color: var(--slate-900);
+  margin-bottom: 1px;
+}
+
+.modal-agent-use-option-desc {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--slate-400);
+}
+
+.modal-agent-use-option-arrow {
+  color: var(--slate-300);
+  flex-shrink: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.modal-agent-use-option:hover .modal-agent-use-option-arrow { color: var(--slate-500); transform: translateX(2px); }
+.modal-agent-use-option-arrow svg { width: 16px; height: 16px; }
 
 /* ─── CONNECTORS VIEW (Coming Soon) ─── */
 .view-connectors { display: none; flex-direction: column; flex: 1; overflow: hidden; }
@@ -4178,6 +4466,253 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
           </div>
         </div>
       </div>
+
+      <!-- Explore Agents -->
+      <div class="explore-agents">
+        <div class="explore-agents-header">
+          <div class="explore-agents-title">Explore Agents</div>
+          <div class="explore-agents-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search agents..." id="exploreAgentSearch" oninput="filterExploreAgents()">
+          </div>
+        </div>
+
+        <div class="explore-agents-filters" id="exploreFilters">
+          <button class="explore-filter-tab active" onclick="setExploreFilter(this, 'all')">All</button>
+          <button class="explore-filter-tab" onclick="setExploreFilter(this, 'legal')">Legal</button>
+          <button class="explore-filter-tab" onclick="setExploreFilter(this, 'data')">Data</button>
+          <button class="explore-filter-tab" onclick="setExploreFilter(this, 'hr')">Human Resources</button>
+          <button class="explore-filter-tab" onclick="setExploreFilter(this, 'ops')">Operations</button>
+          <button class="explore-filter-tab" onclick="setExploreFilter(this, 'prod')">Productivity</button>
+          <button class="explore-filter-tab" onclick="setExploreFilter(this, 'eng')">Engineering</button>
+        </div>
+
+        <div class="explore-agents-grid" id="exploreAgentsGrid">
+
+          <!-- Legal agents -->
+          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Contract Reviewer','Analyze contracts against your playbook, flag risks, and suggest redlines.','legal')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><path d="M9 14l2 2 4-4"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Contract Reviewer</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Analyze contracts against your playbook, flag risks, and suggest redlines.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Contracts</span><span class="explore-agent-tag">Risk</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('NDA Triage','Triage incoming NDAs, classify risk level, and route for review.','legal')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">NDA Triage</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Triage incoming NDAs, classify risk level, and route for review.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">NDA</span><span class="explore-agent-tag">Triage</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="legal" onclick="openAgentUseModal('Compliance Checker','Check documents and processes against regulatory and internal compliance requirements.','legal')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Compliance Checker</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Check documents and processes against regulatory and internal compliance requirements.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Compliance</span><span class="explore-agent-tag">HIPAA</span></div>
+          </div>
+
+          <!-- Data agents -->
+          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Data Explorer','Profile datasets, detect anomalies, and surface data quality insights.','data')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Data Explorer</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Profile datasets, detect anomalies, and surface data quality insights.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Data Quality</span><span class="explore-agent-tag">Profiling</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('Dashboard Builder','Build interactive dashboards from raw data with charts and KPIs.','data')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Dashboard Builder</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Build interactive dashboards from raw data with charts and KPIs.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Dashboard</span><span class="explore-agent-tag">Visualization</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="data" onclick="openAgentUseModal('SQL Assistant','Write, optimize, and explain SQL queries for your data warehouse.','data')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">SQL Assistant</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Write, optimize, and explain SQL queries for your data warehouse.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">SQL</span><span class="explore-agent-tag">Queries</span></div>
+          </div>
+
+          <!-- HR agents -->
+          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Offer Letter Drafter','Generate professional offer letters with compensation details and terms.','hr')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Offer Letter Drafter</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Generate professional offer letters with compensation details and terms.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Recruiting</span><span class="explore-agent-tag">Offers</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Onboarding Planner','Build structured 30/60/90 day onboarding plans for new team members.','hr')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Onboarding Planner</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Build structured 30/60/90 day onboarding plans for new team members.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Onboarding</span><span class="explore-agent-tag">Planning</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="hr" onclick="openAgentUseModal('Policy Lookup','Look up company policies and translate them into plain-language answers.','hr')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Policy Lookup</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Look up company policies and translate them into plain-language answers.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Policy</span><span class="explore-agent-tag">Handbook</span></div>
+          </div>
+
+          <!-- Ops agents -->
+          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Vendor Evaluator','Evaluate vendors with cost, risk, and capability scoring.','ops')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Vendor Evaluator</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Evaluate vendors with cost, risk, and capability scoring.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Vendor</span><span class="explore-agent-tag">Procurement</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('SOP Writer','Document business processes as standardized operating procedures.','ops')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">SOP Writer</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Document business processes as standardized operating procedures.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">SOP</span><span class="explore-agent-tag">Process</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="ops" onclick="openAgentUseModal('Status Report Generator','Generate weekly status reports for leadership from project data.','ops')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Status Report Generator</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Generate weekly status reports for leadership from project data.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Reporting</span><span class="explore-agent-tag">Leadership</span></div>
+          </div>
+
+          <!-- Productivity agents -->
+          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Document Summarizer','Summarize long documents into key points, decisions, and action items.','prod')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Document Summarizer</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Summarize long documents into key points, decisions, and action items.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Summary</span><span class="explore-agent-tag">Documents</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Email Drafter','Compose professional emails from meeting notes, briefs, or context.','prod')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Email Drafter</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Compose professional emails from meeting notes, briefs, or context.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Email</span><span class="explore-agent-tag">Writing</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="prod" onclick="openAgentUseModal('Meeting Recap','Generate structured recaps from meeting notes or transcripts.','prod')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Meeting Recap</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Generate structured recaps from meeting notes or transcripts.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Meetings</span><span class="explore-agent-tag">Notes</span></div>
+          </div>
+
+          <!-- Engineering agents -->
+          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Code Reviewer','Review pull requests for bugs, security issues, and best practices.','eng')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Code Reviewer</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Review pull requests for bugs, security issues, and best practices.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Code Review</span><span class="explore-agent-tag">PR</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('API Doc Generator','Generate API documentation from code, endpoints, and schemas.','eng')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6C5.45 2 5 2.45 5 3V21C5 21.55 5.45 22 6 22H18C18.55 22 19 21.55 19 21V7L14 2Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">API Doc Generator</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Generate API documentation from code, endpoints, and schemas.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">API</span><span class="explore-agent-tag">Documentation</span></div>
+          </div>
+
+          <div class="explore-agent-card" data-category="eng" onclick="openAgentUseModal('Incident Responder','Triage production incidents, draft postmortems, and track remediation.','eng')">
+            <div class="explore-agent-card-top">
+              <div class="explore-agent-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+              <div class="explore-agent-card-info">
+                <div class="explore-agent-card-name">Incident Responder</div>
+                <div class="explore-agent-card-author">By Sprout</div>
+              </div>
+            </div>
+            <div class="explore-agent-card-desc">Triage production incidents, draft postmortems, and track remediation.</div>
+            <div class="explore-agent-card-tags"><span class="explore-agent-tag">Incidents</span><span class="explore-agent-tag">On-call</span></div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <!-- AGENT DETAIL VIEW -->
@@ -5522,6 +6057,51 @@ body { font-family: var(--font-body); color: var(--slate-900); background: var(-
   </div>
 </div>
 
+<!-- AGENT USE MODAL -->
+<div class="modal-overlay" id="agentUseModal" onclick="if(event.target===this)closeAgentUseModal()">
+  <div class="modal-agent-use">
+    <div class="modal-agent-use-header">
+      <div class="modal-agent-use-icon" id="agentUseModalIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <div class="modal-agent-use-info">
+        <div class="modal-agent-use-name" id="agentUseModalName">Contract Reviewer</div>
+        <div class="modal-agent-use-desc" id="agentUseModalDesc">Analyze contracts against your playbook, flag risks, and suggest redlines.</div>
+      </div>
+      <button class="modal-agent-use-close" onclick="closeAgentUseModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-agent-use-divider"></div>
+    <div class="modal-agent-use-options">
+      <div class="modal-agent-use-option" onclick="closeAgentUseModal();showProjects()">
+        <div class="modal-agent-use-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19C22 19.55 21.55 20 21 20H3C2.45 20 2 19.55 2 19V5C2 4.45 2.45 4 3 4H9L11 7H21C21.55 7 22 7.45 22 8V19Z"/></svg>
+        </div>
+        <div class="modal-agent-use-option-text">
+          <div class="modal-agent-use-option-title">Use in a project</div>
+          <div class="modal-agent-use-option-desc">Add this agent to an existing project</div>
+        </div>
+        <div class="modal-agent-use-option-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="modal-agent-use-option" onclick="closeAgentUseModal();showNewProject()">
+        <div class="modal-agent-use-option-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="modal-agent-use-option-text">
+          <div class="modal-agent-use-option-title">Create a new project</div>
+          <div class="modal-agent-use-option-desc">Start a new project with this agent</div>
+        </div>
+        <div class="modal-agent-use-option-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <input type="file" id="folderPicker" webkitdirectory directory multiple style="display:none" onchange="handleFolderSelected(this)">
 <input type="file" id="filePicker" multiple accept="image/*,.pdf,.doc,.docx,.txt,.csv,.xls,.xlsx,.ppt,.pptx" style="display:none" onchange="handleFilesSelected(this)">
 
@@ -6291,6 +6871,56 @@ function openBrowseAgents() {
 }
 function closeBrowseAgents() {
   document.getElementById('browseAgentsModal').classList.remove('active');
+}
+
+// Explore Agents filtering
+let currentExploreFilter = 'all';
+
+function setExploreFilter(btn, category) {
+  currentExploreFilter = category;
+  document.querySelectorAll('.explore-filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  filterExploreAgents();
+}
+
+function filterExploreAgents() {
+  const search = (document.getElementById('exploreAgentSearch').value || '').toLowerCase();
+  const cards = document.querySelectorAll('.explore-agent-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const cat = card.dataset.category;
+    const text = card.textContent.toLowerCase();
+    const matchCat = currentExploreFilter === 'all' || cat === currentExploreFilter;
+    const matchSearch = !search || text.includes(search);
+    const show = matchCat && matchSearch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  // Show/hide no results
+  let noResults = document.getElementById('exploreNoResults');
+  if (visible === 0) {
+    if (!noResults) {
+      noResults = document.createElement('div');
+      noResults.id = 'exploreNoResults';
+      noResults.className = 'explore-no-results';
+      noResults.textContent = 'No agents found matching your search.';
+      document.getElementById('exploreAgentsGrid').appendChild(noResults);
+    }
+    noResults.style.display = '';
+  } else if (noResults) {
+    noResults.style.display = 'none';
+  }
+}
+
+// Agent Use Modal
+function openAgentUseModal(name, desc, category) {
+  document.getElementById('agentUseModalName').textContent = name;
+  document.getElementById('agentUseModalDesc').textContent = desc;
+  document.getElementById('agentUseModal').classList.add('active');
+}
+
+function closeAgentUseModal() {
+  document.getElementById('agentUseModal').classList.remove('active');
 }
 
 function showKnowledgeBase() {
